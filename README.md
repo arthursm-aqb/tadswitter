@@ -32,6 +32,8 @@ Se o PowerShell impedir scripts, execute `powershell -ExecutionPolicy Bypass -Fi
 
 Cada API tem pastas `controller`, `model`, `repository` e `service`. O código começa diretamente em `usuarios-api/src/main/java/usuarios`, `board-api/src/main/java/board` e `gateway/src/main/java/gateway`, sem as antigas pastas `ifrn/arthur`. O gateway tem `controller`, `model` e `service`, porque não possui banco próprio: acessa as APIs internas por HTTP. O cliente HTML/CSS/JS está em `gateway/src/main/resources/static`.
 
+Os diagramas C4 de nível 1 e nível 2, com uma fala curta para a apresentação, estão em [`docs/C4.md`](docs/C4.md).
+
 | Processo | Responsabilidade | Porta |
 | --- | --- | --- |
 | `usuarios-api` | Cadastro, autenticação e entidade `Usuario` | 8081 |
