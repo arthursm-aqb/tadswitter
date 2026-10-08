@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tadswitter · Board</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="topo">
+    <div class="largura cabecalho">
+      <div class="marca">tads<span>witter</span><small> / board</small></div>
+      <div class="acoes-topo"><span id="nome-usuario"></span><button id="sair" class="discreto" hidden>Sair</button></div>
+    </div>
+  </header>
+  <main class="largura">
+    <section id="tela-auth" class="cartao auth">
+      <div class="etiqueta">ACESSO À BOARD</div>
+      <h1>Entre na conversa.</h1>
+      <p class="subtitulo">Faça login ou crie uma conta para postar e comentar.</p>
+      <form id="form-auth">
+        <label id="campo-nome" hidden>Nome<input id="nome" autocomplete="name" maxlength="100"></label>
+        <label>Login<input id="login" autocomplete="username" required maxlength="100"></label>
+        <label>Senha<input id="senha" type="password" autocomplete="current-password" required></label>
+        <button id="enviar-auth" class="primario" type="submit">Entrar</button>
+      </form>
+      <button id="trocar-auth" class="link" type="button">Não tem conta? Cadastre-se</button>
+    </section>
+
+    <section id="tela-board" hidden>
+      <div class="titulo-board"><div><div class="etiqueta">DISCUSSÃO ABERTA</div><h1>Board</h1><p class="subtitulo">Todas as postagens em um lugar.</p></div><button id="atualizar" class="discreto">Atualizar</button></div>
+      <form id="form-postagem" class="cartao novo-post">
+        <label for="texto-postagem">Nova postagem</label>
+        <textarea id="texto-postagem" rows="3" maxlength="5000" required placeholder="O que você quer compartilhar?"></textarea>
+        <div class="direita"><button class="primario" type="submit">Publicar</button></div>
+      </form>
+      <div class="lista-titulo"><h2>Postagens</h2><span id="total-postagens"></span></div>
+      <div id="postagens" class="lista-postagens"></div>
+    </section>
+    <p id="aviso" role="status" aria-live="polite"></p>
+  </main>
+  <footer class="largura">Tadswitter · projeto acadêmico <a href="/swagger-ui.html" target="_blank" rel="noopener">Documentação da API ↗</a></footer>
+</body>
+</html>
