@@ -20,13 +20,14 @@ public class BoardController {
     private final BoardService service;
     public BoardController(BoardService service) { this.service = service; }
 
+    public record NovaPostagem(Long autorId, String autorNome, String titulo, String texto) { }
     public record NovaMensagem(Long autorId, String autorNome, String texto) { }
     public record ComentarioResposta(Long id, Long postagemId, Long autorId, String autorNome, String texto, Instant criadoEm) {
         public ComentarioResposta(Comentario c) { this(c.getId(), c.getPostagemId(), c.getAutorId(), c.getAutorNome(), c.getTexto(), c.getCriadoEm()); }
     }
-    public record PostagemResposta(Long id, Long autorId, String autorNome, String texto, Instant criadoEm, List<ComentarioResposta> comentarios) { }
+    public record PostagemResposta(Long id, Long autorId, String autorNome, String titulo, String texto, Instant criadoEm, List<ComentarioResposta> comentarios) { }
     private PostagemResposta resposta(Postagem p) {
-        return new PostagemResposta(p.getId(), p.getAutorId(), p.getAutorNome(), p.getTexto(), p.getCriadoEm(),
+        return new PostagemResposta(p.getId(), p.getAutorId(), p.getAutorNome(), p.getTitulo(), p.getTexto(), p.getCriadoEm(),
                 service.comentarios(p.getId()).stream().map(ComentarioResposta::new).toList());
     }
 
@@ -38,8 +39,8 @@ public class BoardController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PostagemResposta criar(@RequestBody NovaMensagem dados) {
-        return resposta(service.criarPostagem(dados.autorId(), dados.autorNome(), dados.texto()));
+    public PostagemResposta criar(@RequestBody NovaPostagem dados) {
+        return resposta(service.criarPostagem(dados.autorId(), dados.autorNome(), dados.titulo(), dados.texto()));
     }
 
     @PostMapping("/{id}/comentarios")

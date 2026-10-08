@@ -22,9 +22,11 @@ public class BoardService {
         return postagens.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Postagem não encontrada"));
     }
     public List<Comentario> comentarios(Long postagemId) { return comentarios.findByPostagemIdOrderByIdAsc(postagemId); }
-    public Postagem criarPostagem(Long autorId, String autorNome, String texto) {
+    public Postagem criarPostagem(Long autorId, String autorNome, String titulo, String texto) {
+        if (titulo == null || titulo.isBlank() || titulo.length() > 150)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Título deve ter entre 1 e 150 caracteres");
         validar(texto);
-        return postagens.save(new Postagem(autorId, autorNome, texto.trim()));
+        return postagens.save(new Postagem(autorId, autorNome, titulo.trim(), texto.trim()));
     }
     public Comentario criarComentario(Long postagemId, Long autorId, String autorNome, String texto) {
         buscar(postagemId);

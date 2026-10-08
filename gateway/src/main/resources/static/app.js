@@ -52,6 +52,10 @@ function data(valor) {
   return new Date(valor).toLocaleString('pt-BR', {dateStyle: 'short', timeStyle: 'short'});
 }
 
+function titulo(post) {
+  return post.titulo?.trim() || 'Postagem sem título';
+}
+
 function meta(item, numero) {
   const linha = elemento('div', 'meta');
   linha.append(
@@ -67,6 +71,7 @@ function resumo(post) {
   link.href = `#/postagem/${post.id}`;
   link.append(
     meta(post, post.id),
+    elemento('h2', 'titulo-postagem', titulo(post)),
     elemento('p', 'texto', post.texto),
     elemento('span', 'contagem', `${post.comentarios.length} comentário${post.comentarios.length === 1 ? '' : 's'} · abrir >>`)
   );
@@ -78,7 +83,7 @@ async function carregarBoard() {
     const dados = await api('/api/postagens');
     const posts = Object.values(dados._embedded || {})[0] || [];
     $('postagens').replaceChildren(...(posts.length ? posts.map(resumo) : [elemento('p', 'vazio', 'Ainda não há postagens.') ]));
-    $('total-postagens').textContent = `${posts.length} postagem${posts.length === 1 ? '' : 's'}`;
+    $('total-postagens').textContent = posts.length === 1 ? '1 postagem' : `${posts.length} postagens`;
   } catch (e) { aviso(e.message, true); }
 }
 
@@ -87,7 +92,7 @@ async function carregarPostagem(id) {
     const post = await api(`/api/postagens/${id}`);
     postagemAtual = post.id;
     const caixa = elemento('article', 'postagem-inteira');
-    caixa.append(meta(post, post.id), elemento('p', 'texto', post.texto));
+    caixa.append(elemento('h1', 'titulo-postagem', titulo(post)), meta(post, post.id), elemento('p', 'texto', post.texto));
     $('postagem-detalhe').replaceChildren(caixa);
     $('titulo-comentarios').textContent = `Comentários (${post.comentarios.length})`;
     const comentarios = post.comentarios.map(c => {
@@ -153,7 +158,8 @@ $('form-postagem').addEventListener('submit', async e => {
   const botao = e.currentTarget.querySelector('button');
   botao.disabled = true;
   try {
-    const post = await api('/api/postagens', 'POST', {texto: $('texto-postagem').value});
+    const post = await api('/api/postagens', 'POST', {titulo: $('titulo-postagem').value, texto: $('texto-postagem').value});
+    $('titulo-postagem').value = '';
     $('texto-postagem').value = '';
     location.hash = `#/postagem/${post.id}`;
     mostrar();

@@ -39,8 +39,10 @@ input:focus, textarea:focus { outline: 2px solid #111; outline-offset: 1px; }
 .meta strong { color: #111; }
 .texto { white-space: pre-wrap; overflow-wrap: anywhere; margin: 8px 0; }
 .postagem-resumo .texto { max-height: 4.5em; overflow: hidden; }
+.postagem-resumo .titulo-postagem { border: 0; padding: 0; margin: 8px 0 3px; font-size: 16px; }
 .contagem { color: #444; font-size: 12px; }
 .postagem-inteira { border: 1px solid #111; padding: 16px; margin-top: 18px; }
+.postagem-inteira .titulo-postagem { margin: 0 0 10px; }
 .postagem-inteira .texto { margin: 14px 0 0; }
 .comentario { border-bottom: 1px dotted #777; padding: 12px 5px; }
 .comentario:first-child { border-top: 1px dotted #777; }

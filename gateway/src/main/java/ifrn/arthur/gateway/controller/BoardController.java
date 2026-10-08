@@ -33,7 +33,7 @@ public class BoardController {
     }
     private EntityModel<Dados.PostagemPublica> postagem(Dados.Postagem p) {
         List<EntityModel<Dados.Comentario>> comentarios = p.comentarios().stream().map(this::comentario).toList();
-        return EntityModel.of(new Dados.PostagemPublica(p.id(), p.autorId(), p.autorNome(), p.texto(), p.criadoEm(), comentarios),
+        return EntityModel.of(new Dados.PostagemPublica(p.id(), p.autorId(), p.autorNome(), p.titulo(), p.texto(), p.criadoEm(), comentarios),
                 Link.of(base() + "/api/postagens/" + p.id()).withSelfRel(),
                 Link.of(base() + "/api/postagens/" + p.id() + "/comentarios").withRel("comentar"),
                 Link.of(base() + "/api/postagens").withRel("board"));
@@ -54,9 +54,9 @@ public class BoardController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Criar postagem")
-    public EntityModel<Dados.PostagemPublica> criar(@RequestBody Dados.Texto dados, HttpServletRequest request) {
+    public EntityModel<Dados.PostagemPublica> criar(@RequestBody Dados.NovaPostagem dados, HttpServletRequest request) {
         Dados.UsuarioToken u = usuario(request);
-        return postagem(api.criar(new Dados.MensagemInterna(u.id(), u.nome(), dados.texto())));
+        return postagem(api.criar(new Dados.PostagemInterna(u.id(), u.nome(), dados.titulo(), dados.texto())));
     }
 
     @PostMapping("/{id}/comentarios")

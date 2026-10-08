@@ -26,7 +26,7 @@ Se o PowerShell impedir scripts, execute `powershell -ExecutionPolicy Bypass -Fi
 1. Copie ou clone o projeto na máquina que será o servidor, instale Java 17+ e execute os dois comandos acima.
 2. Descubra o IP dessa máquina com `ipconfig` e libere a porta TCP **8080** no firewall do laboratório, se necessário.
 3. Na máquina principal, abra `http://IP-DO-SERVIDOR:8080`. Cadastro, login, board e Swagger estão nesse mesmo endereço. As APIs internas escutam somente em `127.0.0.1` nas portas 8081 e 8082.
-4. Demonstre: cadastrar usuário → login → ver a lista de postagens e a contagem de comentários → abrir uma postagem → comentar → criar nova postagem → abrir Swagger. No Swagger, use o token retornado em `POST /api/auth/login` no botão **Authorize** para testar as rotas protegidas.
+4. Demonstre: cadastrar usuário → login → ver os títulos das postagens e a contagem de comentários → abrir uma postagem para ler sua mensagem → comentar → criar nova postagem com título e mensagem → abrir Swagger. No Swagger, use o token retornado em `POST /api/auth/login` no botão **Authorize** para testar as rotas protegidas.
 
 ## Organização
 
@@ -48,7 +48,7 @@ O gateway assina JWT com HMAC-SHA256, válido por 8 horas. Nas rotas protegidas,
 | POST | `/api/auth/login` | `{ "login": "ana", "senha": "123456" }` → JWT |
 | GET | `/api/postagens` | Todas as postagens e seus comentários |
 | GET | `/api/postagens/{id}` | Uma postagem |
-| POST | `/api/postagens` | `{ "texto": "Olá!" }` |
+| POST | `/api/postagens` | `{ "titulo": "Assunto", "texto": "Olá!" }` |
 | POST | `/api/postagens/{id}/comentarios` | `{ "texto": "Resposta" }` |
 
 As quatro últimas rotas exigem JWT. O Swagger gera também o contrato OpenAPI em `/v3/api-docs`.

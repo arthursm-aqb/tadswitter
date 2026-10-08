@@ -40,7 +40,7 @@ public class ApiInternaService {
         catch (RestClientResponseException e) { throw erro(e); }
         catch (ResourceAccessException e) { throw indisponivel(); }
     }
-    public Dados.Postagem criar(Dados.MensagemInterna dados) {
+    public Dados.Postagem criar(Dados.PostagemInterna dados) {
         try { return board.post().uri("/postagens").body(dados).retrieve().body(Dados.Postagem.class); }
         catch (RestClientResponseException e) { throw erro(e); }
         catch (ResourceAccessException e) { throw indisponivel(); }
