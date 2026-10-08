@@ -38,7 +38,7 @@ Cada API tem pastas `controller`, `model`, `repository` e `service`. O código c
 | `board-api` | Entidades `Postagem` e `Comentario`; salva e ordena dados | 8082 |
 | `gateway` | JWT, HATEOAS, Swagger, cliente web e entrada única | 8080 |
 
-O gateway assina JWT com HMAC-SHA256, válido por 8 horas. Nas rotas protegidas, envie `Authorization: Bearer <token>`. Para alterar a chave antes da apresentação, defina a variável de ambiente `JWT_SECRET` com **pelo menos 32 caracteres** antes de iniciar o gateway. A senha do usuário é armazenada como hash BCrypt. As respostas da board incluem `_links` (por exemplo, `self`, `comentar`, `board`), que demonstram HATEOAS. Na tela inicial, as postagens mais recentes aparecem primeiro com sua contagem de comentários; ao abrir uma postagem, os comentários aparecem do mais antigo ao mais recente.
+O gateway assina JWT com HMAC-SHA256, válido por 8 horas. Nas rotas protegidas, envie `Authorization: Bearer <token>`. Para alterar a chave antes da apresentação, defina a variável de ambiente `JWT_SECRET` com **pelo menos 32 caracteres** antes de iniciar o gateway. Para manter este projeto acadêmico simples, a senha do usuário é armazenada em texto puro e comparada diretamente no login. As respostas da board incluem `_links` (por exemplo, `self`, `comentar`, `board`), que demonstram HATEOAS. Na tela inicial, as postagens mais recentes aparecem primeiro com sua contagem de comentários; ao abrir uma postagem, os comentários aparecem do mais antigo ao mais recente.
 
 ## Rotas do Gateway
 
