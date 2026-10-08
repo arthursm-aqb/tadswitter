@@ -30,7 +30,7 @@ Se o PowerShell impedir scripts, execute `powershell -ExecutionPolicy Bypass -Fi
 
 ## Organização
 
-Cada API tem pastas `controller`, `model`, `repository` e `service`. O gateway tem `controller`, `model` e `service`, porque não possui banco próprio: acessa as APIs internas por HTTP. O cliente HTML/CSS/JS está em `gateway/src/main/resources/static`.
+Cada API tem pastas `controller`, `model`, `repository` e `service`. O código começa diretamente em `usuarios-api/src/main/java/usuarios`, `board-api/src/main/java/board` e `gateway/src/main/java/gateway`, sem as antigas pastas `ifrn/arthur`. O gateway tem `controller`, `model` e `service`, porque não possui banco próprio: acessa as APIs internas por HTTP. O cliente HTML/CSS/JS está em `gateway/src/main/resources/static`.
 
 | Processo | Responsabilidade | Porta |
 | --- | --- | --- |
