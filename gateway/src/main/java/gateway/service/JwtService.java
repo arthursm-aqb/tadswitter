@@ -20,7 +20,6 @@ public class JwtService {
     private final byte[] segredo;
 
     public JwtService(@Value("${jwt.secret}") String segredo) {
-        if (segredo.length() < 32) throw new IllegalArgumentException("JWT_SECRET deve ter pelo menos 32 caracteres");
         this.segredo = segredo.getBytes(StandardCharsets.UTF_8);
     }
     public String gerar(Dados.Usuario usuario) {

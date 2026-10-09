@@ -31,7 +31,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    @Operation(summary = "Entrar e receber JWT válido por 8 horas")
+    @Operation(summary = "Logar")
     public EntityModel<Dados.LoginResposta> login(@RequestBody Dados.Credenciais dados) {
         Dados.Usuario usuario = api.autenticar(dados);
         String base = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();

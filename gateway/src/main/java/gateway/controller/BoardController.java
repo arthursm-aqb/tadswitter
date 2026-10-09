@@ -28,9 +28,12 @@ public class BoardController {
     private String base() { return ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString(); }
     private Dados.UsuarioToken usuario(HttpServletRequest request) { return (Dados.UsuarioToken) request.getAttribute("usuario"); }
 
+    //hateoas comentario
     private EntityModel<Dados.Comentario> comentario(Dados.Comentario c) {
         return EntityModel.of(c, Link.of(base() + "/api/postagens/" + c.postagemId()).withRel("postagem"));
     }
+
+    //hateoas postagem
     private EntityModel<Dados.PostagemPublica> postagem(Dados.Postagem p) {
         List<EntityModel<Dados.Comentario>> comentarios = p.comentarios().stream().map(this::comentario).toList();
         return EntityModel.of(new Dados.PostagemPublica(p.id(), p.autorId(), p.autorNome(), p.titulo(), p.texto(), p.criadoEm(), comentarios),
@@ -40,7 +43,7 @@ public class BoardController {
     }
 
     @GetMapping
-    @Operation(summary = "Board com todas as postagens; comentários do mais antigo ao mais recente")
+    @Operation(summary = "Board com todas as postagens")
     public CollectionModel<EntityModel<Dados.PostagemPublica>> listar() {
         return CollectionModel.of(api.listar().stream().map(this::postagem).toList(),
                 Link.of(base() + "/api/postagens").withSelfRel(),

@@ -31,18 +31,22 @@ public class BoardController {
                 service.comentarios(p.getId()).stream().map(ComentarioResposta::new).toList());
     }
 
+    // Listar postagens
     @GetMapping
     public List<PostagemResposta> listar() { return service.listar().stream().map(this::resposta).toList(); }
 
+    // Abrir uma postagem
     @GetMapping("/{id}")
     public PostagemResposta buscar(@PathVariable Long id) { return resposta(service.buscar(id)); }
 
+    // Criar uma postagem
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PostagemResposta criar(@RequestBody NovaPostagem dados) {
         return resposta(service.criarPostagem(dados.autorId(), dados.autorNome(), dados.titulo(), dados.texto()));
     }
 
+    // Comentar uma postagem
     @PostMapping("/{id}/comentarios")
     @ResponseStatus(HttpStatus.CREATED)
     public ComentarioResposta comentar(@PathVariable Long id, @RequestBody NovaMensagem dados) {
