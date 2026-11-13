@@ -31,3 +31,5 @@ Os bancos ficam preservados em volumes do Docker. Para apagar também os dados c
 | GET | `/api/postagens/{id}` | Uma postagem |
 | POST | `/api/postagens` | `{ "titulo": "Assunto", "texto": "Olá!" }` |
 | POST | `/api/postagens/{id}/comentarios` | `{ "texto": "Resposta" }` |
+
+https://canva.link/zdwk4qwd41zyi4i
