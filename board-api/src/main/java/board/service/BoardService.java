@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import moderacao.Moderar;
 
 @Service
 public class BoardService {
@@ -26,15 +27,26 @@ public class BoardService {
         if (titulo == null || titulo.isBlank() || titulo.length() > 150)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Título deve ter entre 1 e 150 caracteres");
         validar(texto);
+        validarConteudo(autorId, texto, titulo);
         return postagens.save(new Postagem(autorId, autorNome, titulo.trim(), texto.trim()));
     }
     public Comentario criarComentario(Long postagemId, Long autorId, String autorNome, String texto) {
         buscar(postagemId);
         validar(texto);
+        validarConteudo(autorId, texto);
         return comentarios.save(new Comentario(postagemId, autorId, autorNome, texto.trim()));
     }
     private void validar(String texto) {
         if (texto == null || texto.isBlank() || texto.length() > 5000)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Texto deve ter entre 1 e 5000 caracteres");
+    }
+
+    private void validarConteudo(Long autorId, String texto, String titulo){
+        Moderar.mod(autorId, texto);
+        Moderar.mod(autorId, titulo);
+    }
+
+    private void validarConteudo(Long autorId, String texto){
+        Moderar.mod(autorId, texto);
     }
 }
