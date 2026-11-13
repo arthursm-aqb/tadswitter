@@ -15,7 +15,7 @@ public class Moderar {
 
         RespostaCadastro resp = servico.checkCadastro(req);
         if (resp.getFlag() != null && Boolean.TRUE.equals(resp.getFlag().getValue())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Conteúdo ofensivo detectado pela moderação");
+            throw new ResponseStatusException(HttpStatus.valueOf(422), "Conteúdo ofensivo detectado pela moderação");
         }
     }
 
@@ -26,7 +26,7 @@ public class Moderar {
 
         RespostaForum resp = servico.checkForum(req);
         if (resp.getFlag() != null && Boolean.TRUE.equals(resp.getFlag().getValue())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Conteúdo ofensivo detectado pela moderação");
+            throw new ResponseStatusException(HttpStatus.valueOf(422), "Conteúdo ofensivo detectado pela moderação");
         }
     }
 }
