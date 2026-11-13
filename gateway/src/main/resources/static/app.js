@@ -25,6 +25,7 @@ async function api(caminho, metodo = 'GET', dados) {
       401: 'Login ou senha incorretos.',
       404: 'Postagem não encontrada.',
       409: 'Este login já está em uso.',
+      422: 'Conteúdo ofensivo bloqueado pela moderação.',
       503: 'Uma das APIs internas está fora do ar.'
     };
     throw new Error(mensagens[resposta.status] || 'Não foi possível completar a operação.');
