@@ -30,7 +30,7 @@ async function api(caminho, metodo = 'GET', dados) {
       403: 'Conteúdo bloqueado pela moderação.',
       404: 'Postagem não encontrada.',
       409: 'Este login já está em uso.',
-      422: 'Conteúdo reprovado pela moderação.',
+      422: 'Conteúdo ofensivo bloqueado pela moderação.',
       503: 'Uma das APIs internas está fora do ar.'
     };
     throw new Error(mensagens[resposta.status] || 'Não foi possível completar a operação.');

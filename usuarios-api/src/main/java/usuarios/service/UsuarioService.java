@@ -5,6 +5,7 @@ import usuarios.repository.UsuarioRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import moderacao.Moderar;
 
 @Service
 public class UsuarioService {
@@ -18,6 +19,7 @@ public class UsuarioService {
         login = login.trim().toLowerCase();
         if (repository.existsByLogin(login))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Login já cadastrado");
+        Moderar.mod(nome);
         return repository.save(new Usuario(nome.trim(), login, senha));
     }
 
