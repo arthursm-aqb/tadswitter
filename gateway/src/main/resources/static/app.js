@@ -4,9 +4,13 @@ let usuario = JSON.parse(localStorage.getItem('tadswitter_usuario') || 'null');
 let cadastro = false;
 let postagemAtual = null;
 
-function aviso(mensagem, erro = false) {
+function aviso(mensagem, estado = false) {
   $('aviso').textContent = mensagem;
-  $('aviso').className = erro ? 'erro' : '';
+  $('aviso').className = estado === true || estado === 'erro' ? 'erro' : (estado === 'aguardando' ? 'aguardando' : '');
+}
+
+function moderacaoPendente(resposta) {
+  return !resposta || resposta._pendente || resposta.status === 'PENDENTE' || resposta.status === 'AGUARDANDO_MODERACAO';
 }
 
 async function api(caminho, metodo = 'GET', dados) {
@@ -23,13 +27,20 @@ async function api(caminho, metodo = 'GET', dados) {
     const mensagens = {
       400: 'Confira os campos preenchidos.',
       401: 'Login ou senha incorretos.',
+      403: 'Conteúdo bloqueado pela moderação.',
       404: 'Postagem não encontrada.',
       409: 'Este login já está em uso.',
+      422: 'Conteúdo reprovado pela moderação.',
       503: 'Uma das APIs internas está fora do ar.'
     };
     throw new Error(mensagens[resposta.status] || 'Não foi possível completar a operação.');
   }
-  return resposta.json();
+  const texto = await resposta.text();
+  const corpo = texto ? JSON.parse(texto) : null;
+  if (resposta.status === 202 && corpo && typeof corpo === 'object' && !Array.isArray(corpo)) {
+    corpo._pendente = true;
+  }
+  return corpo;
 }
 
 function sair() {
@@ -131,7 +142,14 @@ $('form-auth').addEventListener('submit', async e => {
   botao.disabled = true;
   try {
     const credenciais = {login: $('login').value, senha: $('senha').value};
-    if (cadastro) await api('/api/auth/cadastro', 'POST', {nome: $('nome').value, ...credenciais});
+    if (cadastro) {
+      aviso('Aguardando aprovação da moderação...', 'aguardando');
+      const criado = await api('/api/auth/cadastro', 'POST', {nome: $('nome').value, ...credenciais});
+      if (moderacaoPendente(criado)) {
+        aviso('Aguardando aprovação da moderação.', 'aguardando');
+        return;
+      }
+    }
     const resposta = await api('/api/auth/login', 'POST', credenciais);
     token = resposta.token;
     usuario = resposta.usuario;
@@ -157,10 +175,15 @@ $('form-postagem').addEventListener('submit', async e => {
   e.preventDefault();
   const botao = e.currentTarget.querySelector('button');
   botao.disabled = true;
+  aviso('Aguardando aprovação da moderação...', 'aguardando');
   try {
     const post = await api('/api/postagens', 'POST', {titulo: $('titulo-postagem').value, texto: $('texto-postagem').value});
     $('titulo-postagem').value = '';
     $('texto-postagem').value = '';
+    if (moderacaoPendente(post)) {
+      aviso('Aguardando aprovação da moderação.', 'aguardando');
+      return;
+    }
     location.hash = `#/postagem/${post.id}`;
     mostrar();
     aviso('Postagem publicada.');
@@ -172,9 +195,14 @@ $('form-comentario').addEventListener('submit', async e => {
   e.preventDefault();
   const botao = e.currentTarget.querySelector('button');
   botao.disabled = true;
+  aviso('Aguardando aprovação da moderação...', 'aguardando');
   try {
-    await api(`/api/postagens/${postagemAtual}/comentarios`, 'POST', {texto: $('texto-comentario').value});
+    const comentario = await api(`/api/postagens/${postagemAtual}/comentarios`, 'POST', {texto: $('texto-comentario').value});
     $('texto-comentario').value = '';
+    if (moderacaoPendente(comentario)) {
+      aviso('Aguardando aprovação da moderação.', 'aguardando');
+      return;
+    }
     await carregarPostagem(postagemAtual);
     aviso('Comentário publicado.');
   } catch (e) { aviso(e.message, true); }
