@@ -1,0 +1,45 @@
+services:
+  usuarios-api:
+    build:
+      context: .
+      target: usuarios-api
+    environment:
+      SERVER_ADDRESS: 0.0.0.0
+      SERVER_PORT: 9081
+      SPRING_DATASOURCE_URL: jdbc:h2:file:/app/dados/usuarios
+    volumes:
+      - usuarios-dados:/app/dados
+
+  board-api:
+    build:
+      context: .
+      target: board-api
+    environment:
+      SERVER_ADDRESS: 0.0.0.0
+      SERVER_PORT: 9082
+      SPRING_DATASOURCE_URL: jdbc:h2:file:/app/dados/board
+      SERVICES_GATEWAY: http://gateway:9080
+    volumes:
+      - board-dados:/app/dados
+
+  gateway:
+    build:
+      context: .
+      target: gateway
+    environment:
+      SERVER_PORT: 9080
+      SERVICES_USUARIOS: http://usuarios-api:9081
+      SERVICES_BOARD: http://board-api:9082
+      JWT_SECRET: o-rato-roeu-a-roupa-do-rei-de-roma
+      WEBSOCKET_HOST: 0.0.0.0
+      WEBSOCKET_PORT: 9083
+    depends_on:
+      - usuarios-api
+      - board-api
+    ports:
+      - "9080:9080"
+      - "9083:9083"
+
+volumes:
+  usuarios-dados:
+  board-dados:

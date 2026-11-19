@@ -1,0 +1,57 @@
+:root { font-family: "Courier New", Courier, monospace; color: #111; background: #fff; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; font-size: 14px; line-height: 1.5; }
+button, input, textarea { font: inherit; }
+button { cursor: pointer; color: #111; background: #fff; border: 1px solid #111; padding: 5px 9px; }
+button:hover, button:focus-visible { color: #fff; background: #111; }
+button:disabled { opacity: .5; cursor: wait; }
+a { color: #111; text-decoration: underline; }
+a:hover { background: #111; color: #fff; }
+.pagina { width: min(900px, calc(100% - 32px)); margin: 0 auto; }
+header { border-bottom: 2px solid #111; }
+.topo { display: flex; justify-content: space-between; align-items: center; gap: 15px; min-height: 54px; }
+.topo strong { font-size: 18px; }
+nav { display: flex; gap: 15px; align-items: center; }
+nav button, .link, #atualizar { padding: 0; border: 0; text-decoration: underline; }
+nav button:hover, .link:hover, #atualizar:hover { background: #111; color: #fff; }
+main { min-height: calc(100vh - 115px); padding-top: 28px; }
+h1 { font-size: 20px; margin: 0 0 18px; }
+h2 { font-size: 16px; padding-bottom: 6px; border-bottom: 1px solid #111; margin: 26px 0 12px; }
+p { margin: 0 0 15px; }
+.caixa { border: 1px solid #111; padding: 18px; }
+.acesso { max-width: 430px; margin: 55px auto; }
+.acesso p { margin-bottom: 20px; }
+label { display: block; margin-bottom: 13px; }
+input, textarea { display: block; width: 100%; border: 1px solid #111; padding: 7px; margin-top: 4px; color: #111; background: #fff; border-radius: 0; }
+textarea { resize: vertical; }
+input:focus, textarea:focus { outline: 2px solid #111; outline-offset: 1px; }
+.acesso form button { margin-top: 3px; }
+.acesso .link { display: block; margin-top: 14px; }
+.linha-titulo, .linha-info { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.linha-titulo { border-bottom: 2px solid #111; margin-bottom: 8px; }
+.linha-titulo h1 { margin-bottom: 8px; }
+.linha-info { color: #555; font-size: 12px; padding: 4px 0 14px; }
+.postagem-resumo { display: block; padding: 13px 8px; border-top: 1px dotted #777; text-decoration: none; }
+.postagem-resumo:last-child { border-bottom: 1px dotted #777; }
+.postagem-resumo:hover, .postagem-resumo:focus-visible { background: #eee; color: #111; }
+.meta { display: flex; flex-wrap: wrap; gap: 5px 16px; color: #444; font-size: 12px; }
+.meta strong { color: #111; }
+.texto { white-space: pre-wrap; overflow-wrap: anywhere; margin: 8px 0; }
+.postagem-resumo .texto { max-height: 4.5em; overflow: hidden; }
+.postagem-resumo .titulo-postagem { border: 0; padding: 0; margin: 8px 0 3px; font-size: 16px; }
+.contagem { color: #444; font-size: 12px; }
+.postagem-inteira { border: 1px solid #111; padding: 16px; margin-top: 18px; }
+.postagem-inteira .titulo-postagem { margin: 0 0 10px; }
+.postagem-inteira .texto { margin: 14px 0 0; }
+.comentario { border-bottom: 1px dotted #777; padding: 12px 5px; }
+.comentario:first-child { border-top: 1px dotted #777; }
+.comentario .texto { margin-bottom: 0; }
+.formulario { margin-top: 22px; }
+.formulario button { margin-top: 2px; }
+.vazio { padding: 18px 6px; color: #555; }
+#aviso { min-height: 20px; margin: 16px 0; }
+#aviso.erro { font-weight: bold; }
+#aviso.aguardando { border: 1px dashed #111; padding: 8px 10px; background: #f5f5f5; }
+footer { border-top: 1px solid #111; display: flex; gap: 8px; padding: 13px 0; color: #555; font-size: 12px; }
+@media (max-width: 600px) { .topo { align-items: flex-start; flex-direction: column; padding: 10px 0; } .linha-titulo { align-items: flex-start; flex-direction: column; gap: 0; } .linha-titulo a { margin-bottom: 9px; } }
