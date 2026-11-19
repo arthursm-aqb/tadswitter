@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>tadswitter / board</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="pagina topo">
+      <strong>tadswitter / board</strong>
+      <nav id="menu" hidden>
+        <a href="#/board">[ board ]</a>
+        <span id="nome-usuario"></span>
+        <button id="sair" type="button">[ sair ]</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="pagina">
+    <section id="tela-auth" class="caixa acesso">
+      <h1>Entrar</h1>
+      <p>Entre ou crie uma conta para participar da board.</p>
+      <form id="form-auth">
+        <label id="campo-nome" hidden>Nome <input id="nome" autocomplete="name" maxlength="100"></label>
+        <label>Login <input id="login" autocomplete="username" maxlength="100" required></label>
+        <label>Senha <input id="senha" type="password" autocomplete="current-password" required></label>
+        <button id="enviar-auth" type="submit">Entrar</button>
+      </form>
+      <button id="trocar-auth" class="link" type="button">Criar conta</button>
+    </section>
+
+    <section id="tela-board" hidden>
+      <div class="linha-titulo">
+        <h1>/board/ — Postagens</h1>
+        <a href="#/nova">[ nova postagem ]</a>
+      </div>
+      <div class="linha-info"><span id="total-postagens"></span><button id="atualizar" type="button">[ atualizar ]</button></div>
+      <div id="postagens"></div>
+    </section>
+
+    <section id="tela-nova" hidden>
+      <p><a href="#/board">← Voltar para a board</a></p>
+      <h1>Nova postagem</h1>
+      <form id="form-postagem" class="caixa formulario">
+        <label for="titulo-postagem">Título</label>
+        <input id="titulo-postagem" maxlength="150" required>
+        <label for="texto-postagem">Mensagem</label>
+        <textarea id="texto-postagem" rows="6" maxlength="5000" required></textarea>
+        <button type="submit">Publicar</button>
+      </form>
+    </section>
+
+    <section id="tela-postagem" hidden>
+      <p><a href="#/board">← Voltar para a board</a></p>
+      <div id="postagem-detalhe"></div>
+      <h2 id="titulo-comentarios">Comentários</h2>
+      <div id="comentarios"></div>
+      <form id="form-comentario" class="caixa formulario">
+        <label for="texto-comentario">Responder</label>
+        <textarea id="texto-comentario" rows="4" maxlength="5000" required></textarea>
+        <button type="submit">Comentar</button>
+      </form>
+    </section>
+
+    <p id="aviso" role="status" aria-live="polite"></p>
+  </main>
+  <footer class="pagina">tadswitter · <a href="/swagger-ui.html" target="_blank" rel="noopener">API / Swagger</a></footer>
+</body>
+</html>
